@@ -118,18 +118,18 @@ public class SwiftPaymentPlugin: NSObject,FlutterPlugin ,SFSafariViewControllerD
 
              let checkoutSettings = OPPCheckoutSettings()
              checkoutSettings.paymentBrands = self.brandsReadyUi;
-             if(self.brandsReadyUi.contains("APPLEPAY")){
+              if(self.brandsReadyUi.contains("APPLEPAY")){
 
                      let paymentRequest = OPPPaymentProvider.paymentRequest(withMerchantIdentifier: self.applePaybundel, countryCode: self.countryCode)
                      paymentRequest.paymentSummaryItems = [PKPaymentSummaryItem(label: self.companyName, amount: NSDecimalNumber(value: self.amount))]
 
-                        paymentRequest.supportedNetworks = [ PKPaymentNetwork.mada ]
-                    //  if #available(iOS 12.1.1, *) {
-                    //  }
-                    //  else {
-                    //      // Fallback on earlier versions
-                    //      paymentRequest.supportedNetworks = [ PKPaymentNetwork.visa, PKPaymentNetwork.masterCard ]
-                    //  }
+                     if #available(iOS 12.1.1, *) {
+                         paymentRequest.supportedNetworks = [ PKPaymentNetwork.mada,PKPaymentNetwork.visa, PKPaymentNetwork.masterCard ]
+                     }
+                     else {
+                         // Fallback on earlier versions
+                         paymentRequest.supportedNetworks = [ PKPaymentNetwork.visa, PKPaymentNetwork.masterCard ]
+                     }
                      checkoutSettings.applePayPaymentRequest = paymentRequest
                     // checkoutSettings.paymentBrands = ["APPLEPAY"]
              }
